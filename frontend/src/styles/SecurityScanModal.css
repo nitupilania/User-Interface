@@ -1,0 +1,22 @@
+/* SecurityScanModal Styles */
+.security-scan-progress {
+  background: linear-gradient(to right, #3b82f6, #8b5cf6);
+  height: 0.75rem;
+  border-radius: 9999px;
+  transition: width 0.5s ease-in-out;
+}
+
+.security-scan-progress[data-progress="0"] { width: 0%; }
+.security-scan-progress[data-progress="10"] { width: 10%; }
+.security-scan-progress[data-progress="25"] { width: 25%; }
+.security-scan-progress[data-progress="50"] { width: 50%; }
+.security-scan-progress[data-progress="60"] { width: 60%; }
+.security-scan-progress[data-progress="70"] { width: 70%; }
+.security-scan-progress[data-progress="80"] { width: 80%; }
+.security-scan-progress[data-progress="90"] { width: 90%; }
+.security-scan-progress[data-progress="100"] { width: 100%; }
+
+/* For any other progress values, use CSS variables as fallback */
+.security-scan-progress {
+  width: var(--progress-width, 0%);
+}

@@ -2,11 +2,13 @@ import React, { useState } from 'react'
 import { Routes, Route, Navigate, useNavigate } from 'react-router-dom'
 import Dashboard from './pages/Dashboard'
 import SimplePenetrationTesting from './pages/SimplePenetrationTesting'
+import SecurityScanModal from './components/SecurityScanModal'
 
 // Original sophisticated layout component
 function CybrtyLayout({ children }: { children: React.ReactNode }) {
   const navigate = useNavigate()
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null)
+  const [isSecurityScanModalOpen, setIsSecurityScanModalOpen] = useState(false)
 
   // Comprehensive NIST Cybersecurity Framework Navigation Structure
   const nistFramework = {
@@ -401,6 +403,36 @@ function CybrtyLayout({ children }: { children: React.ReactNode }) {
 
           {/* Controls */}
           <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+            {/* Security Scan Button */}
+            <button
+              onClick={() => setIsSecurityScanModalOpen(true)}
+              style={{
+                background: 'linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%)',
+                color: '#ffffff',
+                padding: '0.5rem 1rem',
+                borderRadius: '8px',
+                fontSize: '0.875rem',
+                fontWeight: '600',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '0.5rem',
+                border: 'none',
+                cursor: 'pointer',
+                boxShadow: '0 2px 8px rgba(59, 130, 246, 0.3)',
+                transition: 'all 0.2s ease'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = 'translateY(-2px)'
+                e.currentTarget.style.boxShadow = '0 4px 12px rgba(59, 130, 246, 0.4)'
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = 'translateY(0)'
+                e.currentTarget.style.boxShadow = '0 2px 8px rgba(59, 130, 246, 0.3)'
+              }}
+            >
+              🚀 <span>Launch Security Scan</span>
+            </button>
+
             {/* System Status */}
             <div style={{
               background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
@@ -424,6 +456,12 @@ function CybrtyLayout({ children }: { children: React.ReactNode }) {
       <main style={{ padding: '0' }}>
         {children}
       </main>
+
+      {/* Security Scan Modal */}
+      <SecurityScanModal 
+        isOpen={isSecurityScanModalOpen}
+        onClose={() => setIsSecurityScanModalOpen(false)}
+      />
     </div>
   )
 }
