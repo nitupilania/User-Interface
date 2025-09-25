@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
+import SecurityScanModal from '../components/SecurityScanModal';
 
 const SimplePenetrationTesting: React.FC = () => {
   const [selectedModules, setSelectedModules] = useState<string[]>([]);
+  const [isSecurityScanModalOpen, setIsSecurityScanModalOpen] = useState(false);
 
   const handleModuleSelect = (moduleId: string) => {
     setSelectedModules(prev => {
@@ -54,16 +56,8 @@ const SimplePenetrationTesting: React.FC = () => {
 
   const handleStartSelectedScans = () => {
     if (selectedModules.length > 0) {
-      const moduleNames = selectedModules.map(moduleId => {
-        const module = pentestModules.find(m => m.id === moduleId);
-        return module ? module.title : moduleId;
-      }).join(', ');
-      
-      // In a real application, this would trigger the actual scans
-      alert(`🚀 Security Scan Initiated!\n\nSelected Modules:\n${moduleNames}\n\nScan configuration applied. You'll receive notifications as each module completes.\n\nEstimated completion time: 1-2 hours`);
-      
-      // Reset selections after starting scans
-      setSelectedModules([]);
+      // Open the comprehensive security scan modal
+      setIsSecurityScanModalOpen(true);
     } else {
       alert('Please select at least one testing module before starting the scan.');
     }
@@ -260,7 +254,7 @@ const SimplePenetrationTesting: React.FC = () => {
               }
             }}
           >
-            🚀 Launch Security Scan
+            🚀 Launch Comprehensive Scan
             {selectedModules.length > 0 && (
               <span style={{
                 background: 'rgba(255,255,255,0.2)',
@@ -797,6 +791,16 @@ const SimplePenetrationTesting: React.FC = () => {
           </div>
         </div>
       </section>
+
+      {/* Security Scan Modal */}
+      <SecurityScanModal 
+        isOpen={isSecurityScanModalOpen}
+        onClose={() => {
+          setIsSecurityScanModalOpen(false);
+          // Reset selections after modal closes
+          setSelectedModules([]);
+        }}
+      />
     </div>
   );
 };
